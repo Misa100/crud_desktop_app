@@ -34,14 +34,14 @@ namespace ConsoleApp1
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.txtname = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtsearch = new System.Windows.Forms.TextBox();
             this.txtid = new System.Windows.Forms.TextBox();
             this.txtaddress = new System.Windows.Forms.TextBox();
             this.txtsalary = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.btnsave_exit = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -95,12 +95,12 @@ namespace ConsoleApp1
             this.txtname.Size = new System.Drawing.Size(197, 20);
             this.txtname.TabIndex = 4;
             // 
-            // textBox2
+            // txtsearch
             // 
-            this.textBox2.Location = new System.Drawing.Point(307, 35);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(384, 20);
-            this.textBox2.TabIndex = 5;
+            this.txtsearch.Location = new System.Drawing.Point(307, 35);
+            this.txtsearch.Name = "txtsearch";
+            this.txtsearch.Size = new System.Drawing.Size(384, 20);
+            this.txtsearch.TabIndex = 5;
             // 
             // txtid
             // 
@@ -155,16 +155,16 @@ namespace ConsoleApp1
             this.button3.Text = "Find";
             this.button3.UseVisualStyleBackColor = false;
             // 
-            // button4
+            // btnsave_exit
             // 
-            this.button4.BackColor = System.Drawing.Color.Red;
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Location = new System.Drawing.Point(217, 243);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 33);
-            this.button4.TabIndex = 12;
-            this.button4.Text = "Exit";
-            this.button4.UseVisualStyleBackColor = false;
+            this.btnsave_exit.BackColor = System.Drawing.Color.Red;
+            this.btnsave_exit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnsave_exit.Location = new System.Drawing.Point(217, 243);
+            this.btnsave_exit.Name = "btnsave_exit";
+            this.btnsave_exit.Size = new System.Drawing.Size(75, 33);
+            this.btnsave_exit.TabIndex = 12;
+            this.btnsave_exit.Text = "Exit";
+            this.btnsave_exit.UseVisualStyleBackColor = false;
             // 
             // button5
             // 
@@ -203,14 +203,14 @@ namespace ConsoleApp1
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
+            this.Controls.Add(this.btnsave_exit);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.txtsalary);
             this.Controls.Add(this.txtaddress);
             this.Controls.Add(this.txtid);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.txtsearch);
             this.Controls.Add(this.txtname);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -231,14 +231,14 @@ namespace ConsoleApp1
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtname;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtsearch;
         private System.Windows.Forms.TextBox txtid;
         private System.Windows.Forms.TextBox txtaddress;
         private System.Windows.Forms.TextBox txtsalary;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnsave_exit;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.DataGridView dataGridView1;

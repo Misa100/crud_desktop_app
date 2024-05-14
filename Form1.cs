@@ -105,7 +105,7 @@ namespace ConsoleApp1
             {
                 var worksheet = workbook.Worksheets.Add("Teachers");
                 worksheet.Cell(1, 1).InsertTable(dt, "Teachers", true);
-                string filePath = "C:\\Users\\Stagiaire\\Downloads\\Documents\\DEV\\MISA NANTENAINA\\Projet\\Teachers.xlsx";
+                string filePath = "C:\\Users\\Stagiaire\\Downloads\\Documents\\DEV\\MISA NANTENAINA\\ConsoleApp1\\Teachers.xlsx";
                 try
                 {
                     workbook.SaveAs(filePath);

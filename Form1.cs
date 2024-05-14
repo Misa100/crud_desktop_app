@@ -1,75 +1,145 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Npgsql;
+using ClosedXML.Excel;
 
 namespace ConsoleApp1
 {
     public partial class Form1 : Form
     {
         private string connectionString = "Host=localhost;Username=postgres;Password=postgres;Database=school";
+
         public Form1()
         {
             InitializeComponent();
         }
+
         private void Form1_Load(object sender, EventArgs e)
+        {
+            LoadInitialData();
+        }
+
+        private void LoadInitialData()
         {
             using (var conn = new NpgsqlConnection(connectionString))
             {
                 conn.Open();
-                using (var cmd = new NpgsqlCommand("select * from teacher", conn))
+                var cmd = new NpgsqlCommand("SELECT * FROM teacher", conn);
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
                 {
-                    using(var reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            Console.WriteLine(reader.GetString(1));
-                        }
-                    }
+                    Console.WriteLine(reader["name"].ToString());
                 }
             }
         }
+
         private void btninsert_Click(object sender, EventArgs e)
         {
-            ExecuteQuery("INSERT INTO teacher (id, address, salary) VALUES (@id, @address, @salary)",
-                new NpgsqlParameter("@id", txtid.Text),
-                new NpgsqlParameter("@address", txtaddress.Text),
-                new NpgsqlParameter("@salary", txtsalary.Text));
-            clearData();
-            displaydata();
+            InsertOrUpdateTeacher("INSERT INTO teacher (matricule, name, address, salary) VALUES (@id, @name, @address, @salary)",
+                txtid.Text, txtname.Text, txtaddress.Text, txtsalary.Text);
+            RefreshUI();
         }
 
         private void btnupdate_Click(object sender, EventArgs e)
         {
-            ExecuteQuery("UPDATE teacher SET name=@name, address=@address, salary=@salary WHERE id=@id",
-                new NpgsqlParameter("@name", txtname.Text),
-                new NpgsqlParameter("@address", txtaddress.Text),
-                new NpgsqlParameter("@salary", txtsalary.Text),
-                new NpgsqlParameter("@id", txtid.Text));
-            clearData();
-            displaydata();
+            InsertOrUpdateTeacher("UPDATE teacher SET name=@name, address=@address, salary=@salary WHERE matricule=@id",
+                txtid.Text, txtname.Text, txtaddress.Text, txtsalary.Text);
+            RefreshUI();
         }
 
-        private void displaydata()
+        private void btnshow_Click(object sender, EventArgs e)
+        {
+            DisplayData();
+        }
+
+        private void btnfind_Click(object sender, EventArgs e)
+        {
+            FindTeacherById(txtsearch.Text);
+        }
+        private void btndelete_Click(object sender, EventArgs e)
+        {
+            DeleteTeacherByMatricule(txtid.Text);
+            ClearData();
+            DisplayData();
+        }
+
+        private void DeleteTeacherByMatricule(string matricule)
+        {
+            if (!string.IsNullOrWhiteSpace(matricule))
+            {
+                ExecuteQuery("DELETE FROM teacher WHERE matricule=@id", new NpgsqlParameter("@id", matricule));
+            }
+            else
+            {
+                MessageBox.Show("Matricule must be provided to delete a teacher.");
+            }
+        }
+
+        private void btnsave_exit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+        private void btn_export_Click(object sender, EventArgs e)
+        {
+            DataTable dt = GetTeacherData();
+            if (dt != null)
+            {
+                SaveDataTableToExcel(dt);
+            }
+        }
+        private DataTable GetTeacherData()
+        {
+            using (var conn = new NpgsqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new NpgsqlCommand("select matricule, name, address, salary from teacher", conn);
+                var da = new NpgsqlDataAdapter(cmd);
+                var dt = new DataTable();
+                return dt;
+            }
+        }
+        private void SaveDataTableToExcel(DataTable dt)
+        {
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("Teachers");
+                worksheet.Cell(1, 1).InsertTable(dt, "Teachers", true);
+                string filePath = "C:\\Users\\Stagiaire\\Downloads\\Documents\\DEV\\MISA NANTENAINA\\Projet";
+                try
+                {
+                    workbook.SaveAs(filePath);
+                    MessageBox.Show($"Data exported successfully to {filePath}");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Failed to save file : {ex.Message}");
+                }
+            }
+        }
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Handle cell content clicks if necessary
+        }
+
+        private void RefreshUI()
+        {
+            ClearData();
+            DisplayData();
+        }
+
+        private void DisplayData()
         {
             try
             {
                 using (var conn = new NpgsqlConnection(connectionString))
                 {
                     conn.Open();
-                    using (var cmd = new NpgsqlCommand("SELECT * FROM teacher", conn))
-                    using (var da = new NpgsqlDataAdapter(cmd))
-                    {
-                        DataTable dt = new DataTable();
-                        da.Fill(dt);
-                        dataGridView1.DataSource = dt;
-                    }
+                    var cmd = new NpgsqlCommand("SELECT * FROM teacher", conn);
+                    var da = new NpgsqlDataAdapter(cmd);
+                    var dt = new DataTable();
+                    da.Fill(dt);
+                    dataGridView1.DataSource = dt;
                 }
             }
             catch (Exception ex)
@@ -85,11 +155,9 @@ namespace ConsoleApp1
                 using (var conn = new NpgsqlConnection(connectionString))
                 {
                     conn.Open();
-                    using (var cmd = new NpgsqlCommand(sql, conn))
-                    {
-                        cmd.Parameters.AddRange(parameters);
-                        cmd.ExecuteNonQuery();
-                    }
+                    var cmd = new NpgsqlCommand(sql, conn);
+                    cmd.Parameters.AddRange(parameters);
+                    cmd.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)
@@ -98,49 +166,41 @@ namespace ConsoleApp1
             }
         }
 
-        private void clearData()
+        private void ClearData()
         {
             txtid.Clear();
             txtname.Clear();
             txtaddress.Clear();
             txtsalary.Clear();
         }
-        private void btndelete_Click(object sender, EventArgs e)
+        private void InsertOrUpdateTeacher(string sql, string matricule, string name, string address, string salary)
         {
-            string query = "DELETE FROM teacher WHERE id=@id";
-            ExecuteQuery(query, new NpgsqlParameter("@id", txtid.Text));
-            clearData();
-            displaydata();
+            ExecuteQuery(sql, new NpgsqlParameter("@id", matricule),
+                               new NpgsqlParameter("@name", name),
+                               new NpgsqlParameter("@address", address),
+                               new NpgsqlParameter("@salary", salary));
         }
-        private void btnfind_Click(object sender, EventArgs e)
+
+        private void FindTeacherById(string matricule)
         {
             try
             {
                 using (var conn = new NpgsqlConnection(connectionString))
                 {
                     conn.Open();
-                    using (var cmd = new NpgsqlCommand("SELECT * FROM teacher WHERE id=@id", conn))
+                    var cmd = new NpgsqlCommand("SELECT * FROM teacher WHERE matricule=@id", conn);
+                    cmd.Parameters.AddWithValue("@id", matricule);
+                    var da = new NpgsqlDataAdapter(cmd);
+                    var dt = new DataTable();
+                    da.Fill(dt);
+                    if (dt.Rows.Count > 0)
                     {
-                        cmd.Parameters.AddWithValue("@id", txtsearch.Text);
-
-                        DataTable dt = new DataTable();
-                        using (var da = new NpgsqlDataAdapter(cmd))
-                        {
-                            da.Fill(dt);
-                        }
-
-                        if (dt.Rows.Count > 0)
-                        {
-                            txtname.Text = dt.Rows[0]["name"].ToString();
-                            txtaddress.Text = dt.Rows[0]["address"].ToString();
-                            txtsalary.Text = dt.Rows[0]["salary"].ToString();
-                            dataGridView1.DataSource = dt;
-                        }
-                        else
-                        {
-                            MessageBox.Show("No data found.");
-                            dataGridView1.DataSource = null;
-                        }
+                        dataGridView1.DataSource = dt;
+                    }
+                    else
+                    {
+                        MessageBox.Show("No data found.");
+                        dataGridView1.DataSource = null;
                     }
                 }
             }
@@ -149,16 +209,5 @@ namespace ConsoleApp1
                 MessageBox.Show($"Failed to find data: {ex.Message}");
             }
         }
-        private void btnsave_exit_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
     }
 }

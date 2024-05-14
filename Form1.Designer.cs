@@ -45,6 +45,7 @@ namespace ConsoleApp1
             this.btnupdate = new System.Windows.Forms.Button();
             this.btninsert = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.btn_export = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -93,13 +94,13 @@ namespace ConsoleApp1
             this.txtname.Location = new System.Drawing.Point(96, 71);
             this.txtname.Name = "txtname";
             this.txtname.Size = new System.Drawing.Size(197, 20);
-            this.txtname.TabIndex = 4;
+            this.txtname.TabIndex = 2;
             // 
             // txtsearch
             // 
             this.txtsearch.Location = new System.Drawing.Point(307, 35);
             this.txtsearch.Name = "txtsearch";
-            this.txtsearch.Size = new System.Drawing.Size(384, 20);
+            this.txtsearch.Size = new System.Drawing.Size(428, 20);
             this.txtsearch.TabIndex = 5;
             // 
             // txtid
@@ -107,21 +108,21 @@ namespace ConsoleApp1
             this.txtid.Location = new System.Drawing.Point(96, 35);
             this.txtid.Name = "txtid";
             this.txtid.Size = new System.Drawing.Size(197, 20);
-            this.txtid.TabIndex = 6;
+            this.txtid.TabIndex = 1;
             // 
             // txtaddress
             // 
             this.txtaddress.Location = new System.Drawing.Point(96, 104);
             this.txtaddress.Name = "txtaddress";
             this.txtaddress.Size = new System.Drawing.Size(197, 20);
-            this.txtaddress.TabIndex = 7;
+            this.txtaddress.TabIndex = 3;
             // 
             // txtsalary
             // 
             this.txtsalary.Location = new System.Drawing.Point(96, 134);
             this.txtsalary.Name = "txtsalary";
             this.txtsalary.Size = new System.Drawing.Size(197, 20);
-            this.txtsalary.TabIndex = 8;
+            this.txtsalary.TabIndex = 4;
             // 
             // btndelete
             // 
@@ -132,39 +133,44 @@ namespace ConsoleApp1
             this.btndelete.TabIndex = 9;
             this.btndelete.Text = "Delete";
             this.btndelete.UseVisualStyleBackColor = true;
+            this.btndelete.Click += new System.EventHandler(this.btndelete_Click);
             // 
             // btnshow
             // 
+            this.btnshow.BackColor = System.Drawing.Color.AliceBlue;
             this.btnshow.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnshow.Location = new System.Drawing.Point(34, 243);
             this.btnshow.Name = "btnshow";
-            this.btnshow.Size = new System.Drawing.Size(98, 33);
+            this.btnshow.Size = new System.Drawing.Size(85, 33);
             this.btnshow.TabIndex = 10;
             this.btnshow.Text = "Show All";
-            this.btnshow.UseVisualStyleBackColor = true;
+            this.btnshow.UseVisualStyleBackColor = false;
+            this.btnshow.Click += new System.EventHandler(this.btnshow_Click);
             // 
             // btnfind
             // 
-            this.btnfind.BackColor = System.Drawing.Color.MediumSeaGreen;
+            this.btnfind.BackColor = System.Drawing.Color.LightSeaGreen;
             this.btnfind.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnfind.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnfind.Location = new System.Drawing.Point(701, 25);
+            this.btnfind.Location = new System.Drawing.Point(752, 25);
             this.btnfind.Name = "btnfind";
             this.btnfind.Size = new System.Drawing.Size(87, 32);
             this.btnfind.TabIndex = 11;
             this.btnfind.Text = "Find";
             this.btnfind.UseVisualStyleBackColor = false;
+            this.btnfind.Click += new System.EventHandler(this.btnfind_Click);
             // 
             // btnsave_exit
             // 
-            this.btnsave_exit.BackColor = System.Drawing.Color.Red;
+            this.btnsave_exit.BackColor = System.Drawing.Color.LightCoral;
             this.btnsave_exit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnsave_exit.Location = new System.Drawing.Point(217, 243);
+            this.btnsave_exit.Location = new System.Drawing.Point(209, 243);
             this.btnsave_exit.Name = "btnsave_exit";
-            this.btnsave_exit.Size = new System.Drawing.Size(75, 33);
+            this.btnsave_exit.Size = new System.Drawing.Size(83, 33);
             this.btnsave_exit.TabIndex = 12;
             this.btnsave_exit.Text = "Exit";
             this.btnsave_exit.UseVisualStyleBackColor = false;
+            this.btnsave_exit.Click += new System.EventHandler(this.btnsave_exit_Click);
             // 
             // btnupdate
             // 
@@ -175,6 +181,7 @@ namespace ConsoleApp1
             this.btnupdate.TabIndex = 13;
             this.btnupdate.Text = "Update";
             this.btnupdate.UseVisualStyleBackColor = true;
+            this.btnupdate.Click += new System.EventHandler(this.btnupdate_Click);
             // 
             // btninsert
             // 
@@ -185,21 +192,35 @@ namespace ConsoleApp1
             this.btninsert.TabIndex = 14;
             this.btninsert.Text = "Insert";
             this.btninsert.UseVisualStyleBackColor = true;
+            this.btninsert.Click += new System.EventHandler(this.btninsert_Click);
             // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(307, 71);
+            this.dataGridView1.Location = new System.Drawing.Point(306, 71);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(465, 195);
+            this.dataGridView1.Size = new System.Drawing.Size(533, 195);
             this.dataGridView1.TabIndex = 15;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // btn_export
+            // 
+            this.btn_export.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.btn_export.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_export.Location = new System.Drawing.Point(125, 243);
+            this.btn_export.Name = "btn_export";
+            this.btn_export.Size = new System.Drawing.Size(78, 33);
+            this.btn_export.TabIndex = 16;
+            this.btn_export.Text = "Export";
+            this.btn_export.UseVisualStyleBackColor = false;
+            this.btn_export.Click += new System.EventHandler(this.btn_export_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 321);
+            this.ClientSize = new System.Drawing.Size(870, 321);
+            this.Controls.Add(this.btn_export);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btninsert);
             this.Controls.Add(this.btnupdate);
@@ -242,5 +263,6 @@ namespace ConsoleApp1
         private System.Windows.Forms.Button btnupdate;
         private System.Windows.Forms.Button btninsert;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button btn_export;
     }
 }

@@ -38,12 +38,12 @@ namespace ConsoleApp1
             this.txtid = new System.Windows.Forms.TextBox();
             this.txtaddress = new System.Windows.Forms.TextBox();
             this.txtsalary = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btndelete = new System.Windows.Forms.Button();
+            this.btnshow = new System.Windows.Forms.Button();
+            this.btnfind = new System.Windows.Forms.Button();
             this.btnsave_exit = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
+            this.btnupdate = new System.Windows.Forms.Button();
+            this.btninsert = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -123,37 +123,37 @@ namespace ConsoleApp1
             this.txtsalary.Size = new System.Drawing.Size(197, 20);
             this.txtsalary.TabIndex = 8;
             // 
-            // button1
+            // btndelete
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(209, 182);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(83, 35);
-            this.button1.TabIndex = 9;
-            this.button1.Text = "Delete";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btndelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btndelete.Location = new System.Drawing.Point(209, 182);
+            this.btndelete.Name = "btndelete";
+            this.btndelete.Size = new System.Drawing.Size(83, 35);
+            this.btndelete.TabIndex = 9;
+            this.btndelete.Text = "Delete";
+            this.btndelete.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnshow
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(34, 243);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(98, 33);
-            this.button2.TabIndex = 10;
-            this.button2.Text = "Show All";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnshow.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnshow.Location = new System.Drawing.Point(34, 243);
+            this.btnshow.Name = "btnshow";
+            this.btnshow.Size = new System.Drawing.Size(98, 33);
+            this.btnshow.TabIndex = 10;
+            this.btnshow.Text = "Show All";
+            this.btnshow.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // btnfind
             // 
-            this.button3.BackColor = System.Drawing.Color.MediumSeaGreen;
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.button3.Location = new System.Drawing.Point(701, 25);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(87, 32);
-            this.button3.TabIndex = 11;
-            this.button3.Text = "Find";
-            this.button3.UseVisualStyleBackColor = false;
+            this.btnfind.BackColor = System.Drawing.Color.MediumSeaGreen;
+            this.btnfind.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnfind.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnfind.Location = new System.Drawing.Point(701, 25);
+            this.btnfind.Name = "btnfind";
+            this.btnfind.Size = new System.Drawing.Size(87, 32);
+            this.btnfind.TabIndex = 11;
+            this.btnfind.Text = "Find";
+            this.btnfind.UseVisualStyleBackColor = false;
             // 
             // btnsave_exit
             // 
@@ -166,25 +166,25 @@ namespace ConsoleApp1
             this.btnsave_exit.Text = "Exit";
             this.btnsave_exit.UseVisualStyleBackColor = false;
             // 
-            // button5
+            // btnupdate
             // 
-            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.Location = new System.Drawing.Point(125, 182);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(78, 35);
-            this.button5.TabIndex = 13;
-            this.button5.Text = "Update";
-            this.button5.UseVisualStyleBackColor = true;
+            this.btnupdate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnupdate.Location = new System.Drawing.Point(125, 182);
+            this.btnupdate.Name = "btnupdate";
+            this.btnupdate.Size = new System.Drawing.Size(78, 35);
+            this.btnupdate.TabIndex = 13;
+            this.btnupdate.Text = "Update";
+            this.btnupdate.UseVisualStyleBackColor = true;
             // 
-            // button6
+            // btninsert
             // 
-            this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button6.Location = new System.Drawing.Point(34, 182);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(85, 35);
-            this.button6.TabIndex = 14;
-            this.button6.Text = "Insert";
-            this.button6.UseVisualStyleBackColor = true;
+            this.btninsert.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btninsert.Location = new System.Drawing.Point(34, 182);
+            this.btninsert.Name = "btninsert";
+            this.btninsert.Size = new System.Drawing.Size(85, 35);
+            this.btninsert.TabIndex = 14;
+            this.btninsert.Text = "Insert";
+            this.btninsert.UseVisualStyleBackColor = true;
             // 
             // dataGridView1
             // 
@@ -201,12 +201,12 @@ namespace ConsoleApp1
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 321);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
+            this.Controls.Add(this.btninsert);
+            this.Controls.Add(this.btnupdate);
             this.Controls.Add(this.btnsave_exit);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnfind);
+            this.Controls.Add(this.btnshow);
+            this.Controls.Add(this.btndelete);
             this.Controls.Add(this.txtsalary);
             this.Controls.Add(this.txtaddress);
             this.Controls.Add(this.txtid);
@@ -235,12 +235,12 @@ namespace ConsoleApp1
         private System.Windows.Forms.TextBox txtid;
         private System.Windows.Forms.TextBox txtaddress;
         private System.Windows.Forms.TextBox txtsalary;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btndelete;
+        private System.Windows.Forms.Button btnshow;
+        private System.Windows.Forms.Button btnfind;
         private System.Windows.Forms.Button btnsave_exit;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button btnupdate;
+        private System.Windows.Forms.Button btninsert;
         private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

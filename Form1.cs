@@ -83,7 +83,7 @@ namespace ConsoleApp1
         private void btn_export_Click(object sender, EventArgs e)
         {
             DataTable dt = GetTeacherData();
-            if (dt != null)
+            if (dt != null && dt.Rows.Count > 0)
             {
                 SaveDataTableToExcel(dt);
             }
@@ -93,9 +93,15 @@ namespace ConsoleApp1
             using (var conn = new NpgsqlConnection(connectionString))
             {
                 conn.Open();
-                var cmd = new NpgsqlCommand("select matricule, name, address, salary from teacher", conn);
-                var da = new NpgsqlDataAdapter(cmd);
-                var dt = new DataTable();
+                string query = "SELECT matricule, name, address, salary FROM teacher";
+                NpgsqlDataAdapter da = new NpgsqlDataAdapter(query, conn);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                if (dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("No data found to export.");
+                    return null;
+                }
                 return dt;
             }
         }
@@ -116,10 +122,6 @@ namespace ConsoleApp1
                     MessageBox.Show($"Failed to save file : {ex.Message}");
                 }
             }
-        }
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            // Handle cell content clicks if necessary
         }
 
         private void RefreshUI()

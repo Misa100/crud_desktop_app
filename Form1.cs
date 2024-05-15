@@ -57,6 +57,7 @@ namespace ConsoleApp1
         {
             FindTeacherById(txtsearch.Text);
         }
+
         private void btndelete_Click(object sender, EventArgs e)
         {
             DeleteTeacherByMatricule(txtid.Text);
@@ -68,7 +69,7 @@ namespace ConsoleApp1
         {
             if (!string.IsNullOrWhiteSpace(matricule))
             {
-                ExecuteQuery("DELETE FROM teacher WHERE matricule=@id", new NpgsqlParameter("@id", matricule));
+                LancerMaj("DELETE FROM teacher WHERE matricule=@id", new NpgsqlParameter("@id", matricule));
             }
             else
             {
@@ -80,6 +81,7 @@ namespace ConsoleApp1
         {
             Application.Exit();
         }
+
         private void btn_export_Click(object sender, EventArgs e)
         {
             DataTable dt = GetTeacherData();
@@ -88,6 +90,7 @@ namespace ConsoleApp1
                 SaveDataTableToExcel(dt);
             }
         }
+
         private DataTable GetTeacherData()
         {
             using (var conn = new NpgsqlConnection(connectionString))
@@ -105,6 +108,7 @@ namespace ConsoleApp1
                 return dt;
             }
         }
+
         private void SaveDataTableToExcel(DataTable dt)
         {
             using (var workbook = new XLWorkbook())
@@ -132,25 +136,18 @@ namespace ConsoleApp1
 
         private void DisplayData()
         {
-            try
+            using (var conn = new NpgsqlConnection(connectionString))
             {
-                using (var conn = new NpgsqlConnection(connectionString))
-                {
-                    conn.Open();
-                    var cmd = new NpgsqlCommand("SELECT * FROM teacher", conn);
-                    var da = new NpgsqlDataAdapter(cmd);
-                    var dt = new DataTable();
-                    da.Fill(dt);
-                    dataGridView1.DataSource = dt;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Failed to load data: {ex.Message}");
+                conn.Open();
+                var cmd = new NpgsqlCommand("SELECT * FROM teacher", conn);
+                var da = new NpgsqlDataAdapter(cmd);
+                var dt = new DataTable();
+                da.Fill(dt);
+                dataGridView1.DataSource = dt;
             }
         }
 
-        private void ExecuteQuery(string sql, params NpgsqlParameter[] parameters)
+        private void LancerMaj(string sql, params NpgsqlParameter[] parameters)
         {
             try
             {
@@ -175,40 +172,44 @@ namespace ConsoleApp1
             txtaddress.Clear();
             txtsalary.Clear();
         }
+
         private void InsertOrUpdateTeacher(string sql, string matricule, string name, string address, string salary)
         {
-            ExecuteQuery(sql, new NpgsqlParameter("@id", matricule),
-                               new NpgsqlParameter("@name", name),
-                               new NpgsqlParameter("@address", address),
-                               new NpgsqlParameter("@salary", salary));
+            LancerMaj(sql, new NpgsqlParameter("@id", matricule),
+                          new NpgsqlParameter("@name", name),
+                          new NpgsqlParameter("@address", address),
+                          new NpgsqlParameter("@salary", salary));
         }
 
         private void FindTeacherById(string matricule)
         {
             try
             {
-                using (var conn = new NpgsqlConnection(connectionString))
+                object teacherName = GetVal("SELECT name FROM teacher WHERE matricule=@id", new NpgsqlParameter[] { new NpgsqlParameter("@id", matricule) });
+                if (teacherName != null)
                 {
-                    conn.Open();
-                    var cmd = new NpgsqlCommand("SELECT * FROM teacher WHERE matricule=@id", conn);
-                    cmd.Parameters.AddWithValue("@id", matricule);
-                    var da = new NpgsqlDataAdapter(cmd);
-                    var dt = new DataTable();
-                    da.Fill(dt);
-                    if (dt.Rows.Count > 0)
-                    {
-                        dataGridView1.DataSource = dt;
-                    }
-                    else
-                    {
-                        MessageBox.Show("No data found.");
-                        dataGridView1.DataSource = null;
-                    }
+                    MessageBox.Show($"Teacher found: {teacherName}");
+                }
+                else
+                {
+                    MessageBox.Show("Teacher not found.");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to find data: {ex.Message}");
+                MessageBox.Show($"Error occurred: {ex.Message}");
+            }
+        }
+
+        private object GetVal(string query, params NpgsqlParameter[] parameters)
+        {
+            using (var conn = new NpgsqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new NpgsqlCommand(query, conn);
+                cmd.Parameters.AddRange(parameters);
+                var result = cmd.ExecuteScalar();
+                return result ?? null; // return null if result is DBNull
             }
         }
     }

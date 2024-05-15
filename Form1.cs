@@ -180,24 +180,32 @@ namespace ConsoleApp1
                           new NpgsqlParameter("@address", address),
                           new NpgsqlParameter("@salary", salary));
         }
-
         private void FindTeacherById(string matricule)
         {
             try
             {
-                object teacherName = GetVal("SELECT name FROM teacher WHERE matricule=@id", new NpgsqlParameter[] { new NpgsqlParameter("@id", matricule) });
-                if (teacherName != null)
+                using (var conn = new NpgsqlConnection(connectionString))
                 {
-                    MessageBox.Show($"Teacher found: {teacherName}");
-                }
-                else
-                {
-                    MessageBox.Show("Teacher not found.");
+                    conn.Open();
+                    var cmd = new NpgsqlCommand("SELECT matricule, name, address, salary FROM teacher WHERE matricule=@id", conn);
+                    cmd.Parameters.AddWithValue("@id", matricule);
+                    var da = new NpgsqlDataAdapter(cmd);
+                    var dt = new DataTable();
+                    da.Fill(dt);
+                    if (dt.Rows.Count > 0)
+                    {
+                        dataGridView1.DataSource = dt;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Teacher not found.");
+                        dataGridView1.DataSource = null;
+                    }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error occurred: {ex.Message}");
+                MessageBox.Show($"Failed to find data: {ex.Message}");
             }
         }
 
